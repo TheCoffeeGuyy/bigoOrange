@@ -1,24 +1,22 @@
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
+dx = [0, 0, -1, 1]
+dy = [-1, 1, 0, 0]
 
 t = int(input())
 
-def backtrack (count, j, i, curLen, visited):
-    if j >= n or i >= n or visited[j][i] or j < 0 or i < 0 or matrix[j][i] == '.':
+def backtrack (a, r, c, visited):
+    if r >= n or c >= n or visited[r][c] or r < 0 or c < 0 or matrix[r][c] == '.':
         return
-
-    if curLen == 8:
-        print('xzc')
-        count += 1
-        visited[j][i] = False
+    a.append((r, c))
+    visited[r][c] = True
+    if len(a) == 8:
+        print(a)
         return
-    visited[j][i] = True
     for k in range(4):
-        x = dx[k] + j
-        y = dy[k] + i
-        backtrack(count, x, y, curLen+1, visited)
-    visited[j][i] = False
-
+        tempr = dx[k] + r
+        tempc = dy[k] + c
+        backtrack(a, tempr, tempc, visited)
+    visited[r][c] = False
+    a.pop()
 
 for _ in range(t):
     n = int(input())
@@ -30,10 +28,8 @@ for _ in range(t):
     
     visited = [[False for i in range(20)] for j in range(20)]
 
-    ans = 0
-
+    ans = []
+    a = []
     for i in range(n):
         for j in range(n):
-            backtrack(count, j, i, 1, visited)
-
-    print(count)
+            backtrack(a, i, j, visited)
