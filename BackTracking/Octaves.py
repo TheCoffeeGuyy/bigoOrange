@@ -5,19 +5,20 @@ def backtrack (a, r, c):
     a.append(r * n + c)
     visited[r][c] = True
     if len(a) == 8:
-        a.sort()
+        sliceA = a.copy()
+        sliceA.sort()
         cleanAns = ''
-        for el in a:
+        for el in sliceA:
             cleanAns += str(el)
         ans.add(cleanAns)
-        return
-    for k in range(4):
-        tempr = dx[k] + r
-        tempc = dy[k] + c
-        if tempr in range(n) and tempc in range(n) and not visited[tempr][tempc] and matrix[tempr][tempc] != '.':
-            backtrack(a, tempr, tempc)
-    visited[r][c] = False
+    else:
+        for k in range(4):
+            tempr = dx[k] + r
+            tempc = dy[k] + c
+            if tempr in range(n) and tempc in range(n) and not visited[tempr][tempc] and matrix[tempr][tempc] != '.':
+                backtrack(a, tempr, tempc)
     a.pop()
+    visited[r][c] = False
 
 t = int(input())
 
