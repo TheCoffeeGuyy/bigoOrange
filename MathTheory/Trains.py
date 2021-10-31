@@ -39,13 +39,13 @@ for _ in range(1, t+1):
 
     for trip in tripList:
         if trip.side == 0:
-            if not pqa.empty() and pqa.queue[0] < trip.start:
+            if not pqa.empty() and pqa.queue[0] <= trip.start:
                 pqa.get()
             else:
                 countA += 1
             pqb.put(trip.end + n)
         else:
-            if not pqb.empty() and pqb.queue[0] < trip.start:
+            if not pqb.empty() and pqb.queue[0] <= trip.start:
                 pqb.get()
             else:
                 countB += 1
