@@ -19,10 +19,15 @@ while True:
         n, c = map(int, input().split())
         primes = sieveOfEratosthenes(n)
         m = len(primes)
+        print(f'{n} {c}:', end=' ')
         if m < 2 * c - 1:
             for i in primes:
-                print(i)
-        
-        print(primes)
+                print(i, end=' ')
+        else:
+            start = m // 2 - c+ (m % 2)
+            end = m // 2 + c
+            for i in range(start, end):
+                print(primes[i], end=' ')
+        print('\n')
     except EOFError:
         exit()
