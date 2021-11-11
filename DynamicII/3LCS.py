@@ -1,48 +1,31 @@
-MAXN = 1002
-dp = [[-1] * MAXN for i in range(MAXN)]
+MAXN = 102
 
-def LCS(s1 ,s2, m, n):
-    if m == 0 or n == 0:
-        dp[m][n] = 0
-        return dp[m][n]
-    if dp[m][n] != -1:
-        return dp[m][n]
-    if s1[m-1] == s2[n-1]:
-        dp[m][n] = 1 + LCS(s1, s2, m-1, n - 1)
-        return dp[m][n]
+def LCS(s1 ,s2, s3, m, n, k):
+    if m == 0 or n == 0 or k == 0:
+        dp[m][n][k] = 0
+        return dp[m][n][k]
+    if dp[m][n][k] != -1:
+        return dp[m][n][k]
+    if s1[m-1] == s2[n-1] == s3[k-1]:
+        dp[m][n][k] = 1 + LCS(s1, s2, s3, m-1, n - 1, k-1)
+        return dp[m][n][k]
     else:
-        dp[m][n] = max(LCS(s1, s2, m-1, n), LCS(s1, s2, m, n -1))
-        return dp[m][n]
-
-def printLCS(s1, s2, m, n):
-    lengthLCS  = dp[m][n]
-    result = [''] * lengthLCS
-    i = m
-    j = n
-    while i > 0 and j > 0:
-        if s1[i - 1] == s2[j - 1]:
-            result[lengthLCS - 1] = s1[i -1] 
-            i -= 1
-            j -=1 
-            lengthLCS -= 1
-        elif dp[i-1][j] > dp[i][j-1]:
-            i -= 1
-        else:
-            j -= 1
-    print((''.join(result)))
-    return (''.join(result))
-
-# s1 = '1234567890'
-# s2 = '13135789340'
-# LCS(s1, s2, len(s1), len(s2))
-# printLCS(s1, s2, len(s1), len(s2))
+        dp[m][n][k] = max(LCS(s1, s2, s3, m-1, n,k), LCS(s1, s2, s3, m, n -1,k), LCS(s1, s2, s3, m, n, k-1))
+        return dp[m][n][k]
 
 t = int(input())    
 
 for i in range(t):
     n, m, k = map(int, input().split())
     sn, sm, sk = input().split()
-    LCS(sn, sm, len(sn), len(sm))
-    common = printLCS(sn, sm, len(sn), len(sm))
-    dp = [[-1] * MAXN for i in range(MAXN)]
-    print(LCS(sk, common, len(sk), len(common)))
+    dp = [[[0 for j in range(MAXN)] for i in range(MAXN)] for k in range(MAXN)]
+    for i in range(n + 1):
+        for j in range(m + 1):
+            for k in range(k + 1):
+                if i == 0 or j == 0 or k == 0:
+                    dp[i][j][k] = 0
+                elif sn[i - 1] == sm[j - 1] and sm[j - 1] == sk[k - 1]:
+                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1
+                else:
+                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])
+    print(dp[n][m][k])

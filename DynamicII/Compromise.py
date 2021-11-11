@@ -6,7 +6,7 @@ def LCS(text1, text2, m, n):
         return dp[m][n]
     if dp[m][n] != -1:
         return dp[m][n]
-    if text1[m-1] == text2[n-2]:
+    if text1[m-1] == text2[n-1]:
         dp[m][n] = 1 + LCS(text1, text2, m - 1, n-1)
         return dp[m][n]
     else:
@@ -28,34 +28,24 @@ def printPath(text1, text2, m, n):
             i -=1
         else:
             j -=1
-    print(result)
     return ' '.join(result)
 
-text1 = '1234567890'
-dp = [[-1] * 102 for i in range(102)]
-text2 = '13135789340'
-print(LCS(text1, text2, len(text1), len(text2)))
-print(printPath(text1, text2,len(text1), len(text2)))
-
-# while True:
-#     try:
-#         dp = [[-1] * 102 for i in range(102)]
-#         text1 = []
-#         while True:
-#             line = input().split()
-#             if  line[0] == '#':
-#                 break
-#             text1.extend(line)
-#         text2 = []
-#         while True:
-#             line = input().split()
-#             if  line[0] == '#':
-#                 break
-#             text2.extend(line)
-#         # print(text2)
-#         # print(text1)
-        
-#         print(LCS(text1, text2, len(text1), len(text2)))
-#         print(printPath(text1, text2,len(text1), len(text2)))
-#     except EOFError:
-#         exit()
+while True:
+    try:
+        dp = [[-1] * 102 for i in range(102)]
+        text1 = []
+        while True:
+            line = input().split()
+            if  line[0] == '#':
+                break
+            text1.extend(line)
+        text2 = []
+        while True:
+            line = input().split()
+            if  line[0] == '#':
+                break
+            text2.extend(line)
+        LCS(text1, text2, len(text1), len(text2))
+        print(printPath(text1, text2,len(text1), len(text2)))
+    except EOFError:
+        exit()
