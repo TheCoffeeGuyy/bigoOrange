@@ -14,7 +14,7 @@ def lowerBound (a, sub, n, x):
     right = n
     pos = right
     while left < right:
-        mid = (right + left) // 2
+        mid = int((left + right)/2)
         index = sub[mid]
         if a[index].s >= x.s:
             right = mid
